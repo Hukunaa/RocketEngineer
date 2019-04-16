@@ -251,6 +251,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Pod: {fileID: 0}
   PodRigidbody: {fileID: 0}
+  TorqueThreshold: 0.001
   RotationPID:
     Kp: 0.001
     Ki: 0

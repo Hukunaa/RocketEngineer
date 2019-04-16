@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Pod : MonoBehaviour {
 
@@ -19,6 +20,7 @@ public class Pod : MonoBehaviour {
     private float lastTime;
     private int parts;
 
+    private Text Speed;
 
     void Start()
     {
@@ -35,6 +37,8 @@ public class Pod : MonoBehaviour {
 
     void Update()
     {
+        if(Speed == null)
+            Speed = GameObject.Find("Speed").GetComponent<Text>();
         //CenterOfMass
         //Debug.Log("Local : " + GetComponent<Rigidbody>().centerOfMass + "World : " + transform.TransformPoint(GetComponent<Rigidbody>().centerOfMass));
 
@@ -82,7 +86,8 @@ public class Pod : MonoBehaviour {
                         engine.EngineNozzle.transform.localEulerAngles = new Vector3(0, 0, 0);
                 }
             }
-
+            if(Speed != null)
+                Speed.text = GetComponent<Rigidbody>().velocity.magnitude * 3.6f + " Km/h";
         }
     }
 

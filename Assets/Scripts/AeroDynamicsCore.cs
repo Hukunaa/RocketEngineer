@@ -8,7 +8,7 @@ public class AeroDynamicsCore : MonoBehaviour
 {
     public GameObject Pod;
     public Rigidbody PodRigidbody;
-
+    public float TorqueThreshold;
 
     public Vector3d NORMAL;
     public Vector3d FINALNORMAL;
@@ -90,7 +90,7 @@ public class AeroDynamicsCore : MonoBehaviour
         if(anglePower > 90)
             anglePower = 180 - anglePower;
 
-        Torque = (Vector3d.Cross(FINALNORMAL, velocity) * RotationPID.Update((float)anglePower)) * velocity.magnitude * velocity.magnitude;
+        Torque = Vector3d.Cross(FINALNORMAL, velocity).normalized * RotationPID.Update((float)anglePower) * velocity.magnitude * velocity.magnitude;
         /* Debug.DrawRay(transform.position, velocity, Color.magenta);
         Debug.DrawRay(transform.position, FINALNORMAL, Color.red);
         Debug.DrawRay(transform.position, Torque.normalized, Color.blue);*/
@@ -124,7 +124,7 @@ public class AeroDynamicsCore : MonoBehaviour
         {
             for(int i = 0; i < triangles.Length / 3; ++i)
             {
-                if(Vector3d.Dot(Vector3d.FromVector3(transform.rotation * Vector3d.FromVector3d(Normals[triangles[i * 3]])), velocity) > 0.05f)
+                if(Vector3d.Dot(Vector3d.FromVector3(transform.rotation * Vector3d.FromVector3d(Normals[triangles[i * 3]])), velocity) > TorqueThreshold && velocity.magnitude > 0.1f)
                 {
                     double a = Vector3d.Distance(vertices[triangles[i * 3]], vertices[triangles[(i * 3) + 1]]);
                     double b = Vector3d.Distance(vertices[triangles[(i * 3) + 1]], vertices[triangles[(i * 3) + 2]]);
