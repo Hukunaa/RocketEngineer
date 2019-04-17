@@ -125,7 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ccf2e6ffecc6d4d8a43db8cd0dc0e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tankFuel: 400000
+  tankFuel: 100000
+  tank: {fileID: 0}
 --- !u!114 &8907750377674215855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isConnectedToPod: 0
   mass: 1000
+  finalmass: 0
 --- !u!114 &3700431457173914936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,13 +156,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Pod: {fileID: 0}
   PodRigidbody: {fileID: 0}
-  NORMAL: {x: 0, y: 0, z: 0}
-  FINALNORMAL: {x: 0, y: 0, z: 0}
-  Torque: {x: 0, y: 0, z: 0}
-  velocity: {x: 0, y: 0, z: 0}
-  foundPod: 0
-  finalAngle: 0
-  anglePower: 0
+  TorqueThreshold: 0
+  AirResistance: 0
   RotationPID:
     Kp: 500
     Ki: 375

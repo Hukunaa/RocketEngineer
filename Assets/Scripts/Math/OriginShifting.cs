@@ -24,7 +24,8 @@ public class OriginShifting : MonoBehaviour
             {
                 lastPos = transform.position;
                 foreach(Transform obj in WorldGameObjs)
-                    obj.position -= lastPos;
+                    if(obj.parent == null)
+                        obj.position -= lastPos;
             }
 
     }
