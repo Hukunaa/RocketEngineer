@@ -94,7 +94,7 @@ public class Pod : MonoBehaviour {
 
     public void OnDrawGizmos()
     {
-        Gizmos.DrawSphere(transform.TransformPoint(GetComponent<Rigidbody>().centerOfMass), 1);
+        Gizmos.DrawSphere(transform.TransformPoint(GetComponent<Rigidbody>().centerOfMass), 0.4f);
     }
     public void Build()
     {

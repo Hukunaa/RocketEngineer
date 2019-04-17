@@ -9,6 +9,9 @@ public class AeroDynamicsCore : MonoBehaviour
     public GameObject Pod;
     public Rigidbody PodRigidbody;
     public float TorqueThreshold;
+    
+    [Range(0, 1)]
+    public float AirResistance;
 
     public Vector3d NORMAL;
     public Vector3d FINALNORMAL;
@@ -17,7 +20,10 @@ public class AeroDynamicsCore : MonoBehaviour
     private Vector3d[] vertices;
     private Vector3d[] Normals;
     private int[] triangles;
+
     public Vector3d Torque;
+    public Vector3d Force;
+
     private Vector3d centerOfMass;
     private Vector3d velocity;
 
@@ -35,6 +41,7 @@ public class AeroDynamicsCore : MonoBehaviour
         FINALNORMAL = Vector3d.zero;
         triangles = GetComponent<MeshFilter>().mesh.triangles;
         Torque = Vector3d.zero;
+        Force = Vector3d.zero;
         foundPod = false;
         anglePower = 0;
 
@@ -85,12 +92,13 @@ public class AeroDynamicsCore : MonoBehaviour
 
         CalculateAerodynamics();
         FINALNORMAL = Vector3d.FromVector3(transform.rotation * Vector3d.FromVector3d(NORMAL));
-        anglePower = Vector3d.Angle(FINALNORMAL, velocity);
+        //anglePower = Vector3d.Angle(FINALNORMAL, velocity);
 
-        if(anglePower > 90)
-            anglePower = 180 - anglePower;
+        //if(anglePower > 90)
+            //anglePower = 180 - anglePower;
 
-        Torque = Vector3d.Cross(FINALNORMAL, velocity).normalized * RotationPID.Update((float)anglePower) * velocity.magnitude * velocity.magnitude;
+        //Torque = Vector3d.Cross(FINALNORMAL, velocity).normalized * RotationPID.Update((float)anglePower) * velocity.magnitude * velocity.magnitude;
+        Force = FINALNORMAL.normalized * ((velocity.magnitude * velocity.magnitude ) * AirResistance);
         /* Debug.DrawRay(transform.position, velocity, Color.magenta);
         Debug.DrawRay(transform.position, FINALNORMAL, Color.red);
         Debug.DrawRay(transform.position, Torque.normalized, Color.blue);*/
@@ -110,7 +118,8 @@ public class AeroDynamicsCore : MonoBehaviour
             PodRigidbody.AddForce(Vector3d.FromVector3d(Vector3d.forward) * 10000);
         }
         if(PodRigidbody != null)
-            PodRigidbody.AddTorque(Vector3d.FromVector3d(Torque));
+            PodRigidbody.AddForceAtPosition(-Vector3d.FromVector3d(Force), transform.TransformPoint(Vector3d.FromVector3d(FINALPOS)));
+            //PodRigidbody.AddTorque(Vector3d.FromVector3d(Torque));
         // Mathf.Pow(velocity.magnitude, 2);
         /* * (1 + Vector3d.Distance(gameObject.transform.position + FINALPOS, Pod.transform.position + PodRigidbody.centerOfMass))*/
 
@@ -139,7 +148,7 @@ public class AeroDynamicsCore : MonoBehaviour
                     ((vertices[triangles[i * 3]].y + vertices[triangles[(i * 3) + 1]].y + vertices[triangles[(i * 3) + 2]].y)) / 3, 
                     ((vertices[triangles[i * 3]].z + vertices[triangles[(i * 3) + 1]].z + vertices[triangles[(i * 3) + 2]].z)) / 3);
 
-                    //FINALPOS += centralPoint;
+                    FINALPOS += centralPoint;
                     Debug.DrawRay(transform.TransformPoint(Vector3d.FromVector3d(centralPoint)), transform.rotation * Vector3d.FromVector3d(Normals[triangles[i * 3]]) * (float)(0.5 + area), Color.red);
                     NORMAL += Normals[triangles[i * 3]] * (0.5f + area) * 2;
                     
@@ -147,6 +156,7 @@ public class AeroDynamicsCore : MonoBehaviour
                 }
             }
             NORMAL /= j;
+            FINALPOS /= j;
         }
 
         //FINALPOS /= (triangles.Length / 3);
