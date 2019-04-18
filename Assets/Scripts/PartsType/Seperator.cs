@@ -49,14 +49,22 @@ public class Seperator : MonoBehaviour
             }
         }
 
-
         GameObject MainPart = ChildList[0];
+        MainPart.AddComponent<Pod>();
         MainPart.AddComponent<Rigidbody>();
-        MainPart.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
-
-        Vector3 centerOfMass = Vector3.zero;
+        
         MainPart.transform.parent = null;
+        MainPart.GetComponent<Pod>().Build();
+        MainPart.GetComponent<Pod>().isSetup = true;
+        MainPart.GetComponent<Pod>().RecalculateRocket();
+        MainPart.GetComponent<AeroDynamicsCore>().FindPod();
+        MainPart.GetComponent<Pod>().Launched = true;
+
         Pod.GetComponent<Pod>().RecalculateRocket();
+        MainPart.GetComponent<Rigidbody>().velocity = Pod.GetComponent<Rigidbody>().velocity;
+        MainPart.GetComponent<Rigidbody>().useGravity = false;
+        MainPart.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+        
         
     }
 

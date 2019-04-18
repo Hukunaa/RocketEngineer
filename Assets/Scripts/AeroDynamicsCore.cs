@@ -29,7 +29,6 @@ public class AeroDynamicsCore : MonoBehaviour
         m_normal = Vector3d.zero;
         m_finalNormal = Vector3d.zero;
         m_trianglesIds = GetComponent<MeshFilter>().mesh.triangles;
-        m_torque = Vector3d.zero;
         m_force = Vector3d.zero;
 
         m_pod = gameObject;
@@ -75,9 +74,10 @@ public class AeroDynamicsCore : MonoBehaviour
 
      public void OnDrawGizmos()
      {
+        Gizmos.color = Color.magenta;
         Gizmos.DrawRay(transform.position, Vector3d.FromVector3d(velocity));
+        Gizmos.color = Color.blue;
         Gizmos.DrawRay(transform.position, Vector3d.FromVector3d(m_finalNormal));
-        Gizmos.DrawRay(transform.position, Vector3d.FromVector3d(m_torque));
      }
     void FixedUpdate()
     {
@@ -91,6 +91,10 @@ public class AeroDynamicsCore : MonoBehaviour
 
     }
 
+    public void FindPod()
+    {
+        m_pod = gameObject;     
+    }
     void CalculateAerodynamics()
     {
         int j = 0;

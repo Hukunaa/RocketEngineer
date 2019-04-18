@@ -4,21 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Pod : MonoBehaviour {
-
-    public List<GameObject> RocketParts;
     public float MaxEnergy = 500;
     public float mass = 0;
 
-    private bool isSetup = false;
-    private bool Launched = false;
+    public bool isSetup = false;
+    public bool Launched = false;
     private bool isBuilt = false;
 
-    private GameStateManager GameStatus = null;
-
-    [SerializeField] private Camera PodCamera;
+    private GameStateManager GameStatus;
 
     private float lastTime;
-    private int parts;
 
     private Text Speed;
 
@@ -26,12 +21,6 @@ public class Pod : MonoBehaviour {
     {
         lastTime = 0;
         GameStatus = GameObject.FindObjectOfType<GameStateManager>();
-        //Camera[] allcameras = GameObject.FindObjectsOfType<Camera>();
-        //foreach(Camera cam in allcameras)
-            //if(cam.transform.parent == gameObject.transform)
-                //PodCamera = cam;
-
-        //PodCamera.gameObject.SetActive(false);
 
     }
 
@@ -39,9 +28,6 @@ public class Pod : MonoBehaviour {
     {
         if(Speed == null)
             Speed = GameObject.Find("Speed").GetComponent<Text>();
-        //CenterOfMass
-        //Debug.Log("Local : " + GetComponent<Rigidbody>().centerOfMass + "World : " + transform.TransformPoint(GetComponent<Rigidbody>().centerOfMass));
-
         //CONTROL SYSTEM
         if(isBuilt)
         {
@@ -64,7 +50,6 @@ public class Pod : MonoBehaviour {
             }
             if(Input.GetKeyDown(KeyCode.Space) && !Launched)
             {
-                GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
                 Launched = true;
             }
 
@@ -94,19 +79,20 @@ public class Pod : MonoBehaviour {
 
     public void OnDrawGizmos()
     {
+        Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(transform.TransformPoint(GetComponent<Rigidbody>().centerOfMass), 0.4f);
     }
     public void Build()
     {
         //PodCamera.gameObject.SetActive(true);
 
-        GameStatus.Game = GameStateManager.GameState.SIMULATING;
+        //GameStatus.Game = GameStateManager.GameState.SIMULATING;
         isBuilt = true;
 
         GameObject[] AllParts = GameObject.FindGameObjectsWithTag("Part");
         foreach (GameObject Part in AllParts)
         {
-            if(Part.GetComponent<Entity>())
+            if(Part.GetComponent<Entity>() && Part.transform.IsChildOf(gameObject.transform))
                 if(Part.GetComponent<Entity>().isConnectedToPod)
                 {
                     Part.GetComponent<JointFixer>().enabled = false;
@@ -120,7 +106,8 @@ public class Pod : MonoBehaviour {
 
     public void RecalculateRocket()
     {
-        RocketParts.Clear();
+        
+        List<GameObject> RocketParts = new List<GameObject>();
         Transform[] parts = transform.GetComponentsInChildren<Transform>();
 
         mass = 0;
@@ -152,10 +139,6 @@ public class Pod : MonoBehaviour {
         centerOfMass.z /= mass;
         GetComponent<Rigidbody>().centerOfMass = transform.InverseTransformPoint(centerOfMass);
         GetComponent<Rigidbody>().mass = mass;
-        /*if(centerofMassObj)
-            centerofMassObj.transform.position = GetComponent<Rigidbody>().centerOfMass + transform.position;*/
-            
-        //Debug.Log("Added Mass, Center of mass is: " + GetComponent<Rigidbody>().centerOfMass);
     }
 }
 

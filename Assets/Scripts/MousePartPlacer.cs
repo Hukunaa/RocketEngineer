@@ -6,7 +6,6 @@ public class MousePartPlacer : MonoBehaviour
 {
 
     public Transform PartTransform;
-    private GameObject placingObj;
     
     Vector3 MouseWorldPos;
     Vector3 surfacePos = Vector3.zero;
