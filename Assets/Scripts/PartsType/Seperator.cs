@@ -55,24 +55,6 @@ public class Seperator : MonoBehaviour
         MainPart.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
 
         Vector3 centerOfMass = Vector3.zero;
-        //float mass = 0;
-
-        /*foreach(GameObject child in ChildList)
-        {
-            
-            MainPart.GetComponent<Rigidbody>().mass += child.GetComponent<Entity>().mass;
-            mass += child.GetComponent<Entity>().mass;
-
-            child.GetComponent<Entity>().isConnectedToPod = false;
-            child.GetComponent<AeroDynamicsCore>().Pod = MainPart;
-            child.GetComponent<AeroDynamicsCore>().PodRigidbody = MainPart.GetComponent<Rigidbody>();
-            
-            centerOfMass += new Vector3((child.transform.position.x - MainPart.transform.position.x) * child.GetComponent<Entity>().mass, 
-                            (child.transform.position.y - MainPart.transform.position.y) * child.GetComponent<Entity>().mass,
-                            (child.transform.position.z - MainPart.transform.position.z) * child.GetComponent<Entity>().mass);
-        }
-        centerOfMass /= mass;
-        MainPart.GetComponent<Rigidbody>().centerOfMass = centerOfMass;*/
         MainPart.transform.parent = null;
         Pod.GetComponent<Pod>().RecalculateRocket();
         

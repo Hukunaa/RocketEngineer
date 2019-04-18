@@ -9,9 +9,6 @@ public class AeroDynamicsCore : MonoBehaviour
     public GameObject m_pod;
     public Rigidbody m_podRigidbody;
     public float TorqueThreshold;
-    
-    [Range(0, 1)]
-    public float AirResistance;
 
     public Vector3d m_normal;
     public Vector3d m_finalNormal;
@@ -25,10 +22,10 @@ public class AeroDynamicsCore : MonoBehaviour
     public Vector3d m_force;
 
     private Vector3d velocity;
+    public float m_airResistance;
 
     void Start()
     {
-        
         m_normal = Vector3d.zero;
         m_finalNormal = Vector3d.zero;
         m_trianglesIds = GetComponent<MeshFilter>().mesh.triangles;
@@ -53,6 +50,8 @@ public class AeroDynamicsCore : MonoBehaviour
 
     void Update()
     {
+        m_airResistance = FindObjectOfType<PhysicsSettings>().AirResistance;
+
         if(!m_pod.GetComponent<Rigidbody>())
         {
             if(m_pod.transform.parent != null)
@@ -70,7 +69,8 @@ public class AeroDynamicsCore : MonoBehaviour
 
         CalculateAerodynamics();
         m_finalNormal = Vector3d.FromVector3(transform.rotation * Vector3d.FromVector3d(m_normal));
-        m_force = m_finalNormal.normalized * ((velocity.magnitude * velocity.magnitude ) * AirResistance);
+        m_force = m_finalNormal.normalized * ((velocity.magnitude * velocity.magnitude ) * m_airResistance);
+        m_force = 1.225f * ((m_finalNormal.normalized * ((velocity.magnitude * velocity.magnitude )) / 2) * m_airResistance);
     }
 
      public void OnDrawGizmos()
@@ -99,7 +99,7 @@ public class AeroDynamicsCore : MonoBehaviour
         {
             for(int i = 0; i < m_trianglesIds.Length / 3; ++i)
             {
-                if(Vector3d.Dot(Vector3d.FromVector3(transform.rotation * Vector3d.FromVector3d(m_normals[m_trianglesIds[i * 3]])), velocity) > TorqueThreshold && velocity.magnitude > 0.1f)
+                if(Vector3d.Dot(Vector3d.FromVector3(transform.rotation * Vector3d.FromVector3d(m_normals[m_trianglesIds[i * 3]])), velocity) > 0 && velocity.magnitude > 0.1f)
                 {
                     double a = Vector3d.Distance(m_vertices[m_trianglesIds[i * 3]], m_vertices[m_trianglesIds[(i * 3) + 1]]);
                     double b = Vector3d.Distance(m_vertices[m_trianglesIds[(i * 3) + 1]], m_vertices[m_trianglesIds[(i * 3) + 2]]);

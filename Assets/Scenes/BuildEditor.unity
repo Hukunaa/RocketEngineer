@@ -286,13 +286,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f5e369a688ed74f90144f5981b84c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pod: {fileID: 0}
-  PodRigidbody: {fileID: 0}
-  RotationPID:
-    Kp: 0.2
-    Ki: 0.05
-    Kd: 1.2
-    value: 0
+  m_pod: {fileID: 0}
+  m_podRigidbody: {fileID: 0}
+  TorqueThreshold: 0
+  m_airResistance: 0
 --- !u!64 &115691166
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1193,13 +1190,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f5e369a688ed74f90144f5981b84c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pod: {fileID: 0}
-  PodRigidbody: {fileID: 0}
-  RotationPID:
-    Kp: 0.2
-    Ki: 0.05
-    Kd: 1.2
-    value: 0
+  m_pod: {fileID: 0}
+  m_podRigidbody: {fileID: 0}
+  TorqueThreshold: 0
+  m_airResistance: 0
 --- !u!114 &601978638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1852,13 +1846,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f5e369a688ed74f90144f5981b84c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pod: {fileID: 0}
-  PodRigidbody: {fileID: 0}
-  RotationPID:
-    Kp: 0.2
-    Ki: 0.05
-    Kd: 1.2
-    value: 0
+  m_pod: {fileID: 0}
+  m_podRigidbody: {fileID: 0}
+  TorqueThreshold: 0
+  m_airResistance: 0
 --- !u!114 &913333751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3097,6 +3088,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1775674174}
   - component: {fileID: 1775674173}
+  - component: {fileID: 1775674175}
   m_Layer: 0
   m_Name: GameStateManager
   m_TagString: GameStateManager
@@ -3131,6 +3123,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1775674175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775674172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2292460defca452458b5a1d0af986e6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AirResistance: 0.4
 --- !u!1 &1819845698
 GameObject:
   m_ObjectHideFlags: 0
