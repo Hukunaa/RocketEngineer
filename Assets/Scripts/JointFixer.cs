@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-   
+
 public class JointFixer : MonoBehaviour
 {
     private GameObject MouseManager;
@@ -25,11 +25,11 @@ public class JointFixer : MonoBehaviour
 
     public void StickPart()
     {
-         foreach(GameObject joint in Joints)
+        foreach (GameObject joint in Joints)
         {
-            foreach(GameObject otherJoint in PotentialNearJoints)
+            foreach (GameObject otherJoint in PotentialNearJoints)
             {
-                if (otherJoint != joint 
+                if (otherJoint != joint
                 && Vector3.Distance(otherJoint.transform.position, joint.transform.position) < 0.5f)
                 {
                     transform.position = otherJoint.transform.position + (transform.position - joint.transform.position);

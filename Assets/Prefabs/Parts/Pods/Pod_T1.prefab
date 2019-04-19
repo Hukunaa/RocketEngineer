@@ -218,10 +218,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fd8de5bc030fe944a5516cc0039dd4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RocketParts: []
   MaxEnergy: 500
   mass: 400
-  PodCamera: {fileID: 0}
+  isSetup: 0
+  Launched: 0
 --- !u!114 &6822933123517722739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isConnectedToPod: 0
-  mass: 400
+  mass: 4200
   finalmass: 0
 --- !u!114 &3948897099939454268
 MonoBehaviour:
@@ -249,14 +249,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f5e369a688ed74f90144f5981b84c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pod: {fileID: 0}
-  PodRigidbody: {fileID: 0}
+  m_pod: {fileID: 0}
+  m_podRigidbody: {fileID: 0}
   TorqueThreshold: 0.001
-  RotationPID:
-    Kp: 0.001
-    Ki: 0
-    Kd: 0.001
-    value: 0
+  m_airResistance: 0
 --- !u!114 &1542146157972617659
 MonoBehaviour:
   m_ObjectHideFlags: 0

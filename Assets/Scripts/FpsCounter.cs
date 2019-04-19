@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
- 
+
 public class FpsCounter : MonoBehaviour
 {
     public int avgFrameRate;
@@ -10,7 +10,7 @@ public class FpsCounter : MonoBehaviour
     {
         display_Text = GetComponent<Text>();
     }
-    public void Update ()
+    public void Update()
     {
         float current = 0;
         current = (int)(1f / Time.unscaledDeltaTime);

@@ -5,28 +5,28 @@ using UnityEngine;
 public class MousePartPlacer : MonoBehaviour
 {
 
-    public Transform PartTransform;
-    
-    Vector3 MouseWorldPos;
-    Vector3 surfacePos = Vector3.zero;
+    public Transform m_partTransform;
 
-    private float mouseZ = 10;
-    public bool canTakePart;
-    public RaycastHit PartHit;
+    Vector3 m_mouseWorldPod;
+    Vector3 m_surfacePos = Vector3.zero;
+
+    private float m_mouseZ = 10;
+    public bool m_canTakePart;
+    public RaycastHit m_partHit;
 
     private GameStateManager GameStatus;
-    
-    public Camera mainCam;
 
-    public bool hasSurfacetoHit;
-    public bool isOnGhost;
+    public Camera m_mainCam;
+
+    public bool m_surfaceHit;
+    public bool m_isOnGhost;
 
     // Start is called before the first frame update
     void Start()
     {
-        isOnGhost = false;
-
-        canTakePart = false;
+        m_isOnGhost = false;
+        m_mainCam = Camera.main;
+        m_canTakePart = false;
         GameStatus = GameObject.FindWithTag("GameStateManager").GetComponent<GameStateManager>();
     }
 
@@ -34,58 +34,58 @@ public class MousePartPlacer : MonoBehaviour
     void Update()
     {
 
-        if(Input.GetMouseButtonDown(0) && GameStatus.Game == GameStateManager.GameState.BUILDING)
+        if (Input.GetMouseButtonDown(0) && GameStatus.Game == GameStateManager.GameState.BUILDING)
         {
-            if(Physics.Raycast(mainCam.ScreenPointToRay(Input.mousePosition), out PartHit, 1000.0f) && !isOnGhost)
+            if (Physics.Raycast(m_mainCam.ScreenPointToRay(Input.mousePosition), out m_partHit, 1000.0f) && !m_isOnGhost)
             {
-                PartTransform = PartHit.collider.transform;
-                PartTransform.parent = null;
-                PartTransform.gameObject.layer = 2;
-                canTakePart = true;
-                isOnGhost = true;
+                m_partTransform = m_partHit.collider.transform;
+                m_partTransform.parent = null;
+                m_partTransform.gameObject.layer = 2;
+                m_canTakePart = true;
+                m_isOnGhost = true;
 
             }
-            else if(isOnGhost == true)
+            else if (m_isOnGhost == true)
             {
-                Stick(PartTransform.gameObject);
+                Stick(m_partTransform.gameObject);
                 GameObject.FindObjectOfType<Pod>().RecalculateRocket();
-                PartTransform.gameObject.layer = 9;
-                isOnGhost = false;
-                PartTransform = null;
+                m_partTransform.gameObject.layer = 9;
+                m_isOnGhost = false;
+                m_partTransform = null;
             }
         }
 
-        if(isOnGhost && GameStatus.Game == GameStateManager.GameState.BUILDING)
+        if (m_isOnGhost && GameStatus.Game == GameStateManager.GameState.BUILDING)
         {
             Vector3 mousePos = Vector3.zero;
 
-            if(Input.GetKey(KeyCode.W))
-                mouseZ += 0.1f;
-            else if(Input.GetKey(KeyCode.S))
-                mouseZ -= 0.1f;
+            if (Input.GetKey(KeyCode.W))
+                m_mouseZ += 0.1f;
+            else if (Input.GetKey(KeyCode.S))
+                m_mouseZ -= 0.1f;
 
 
-            mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, mouseZ);
+            mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, m_mouseZ);
 
             RaycastHit hit;
-            if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 1000.0f))
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 1000.0f))
             {
-                surfacePos = hit.point;
-                hasSurfacetoHit = true;
-                PartTransform.forward = hit.normal;
-                PartTransform.position = hit.point + hit.normal;
-                PartTransform.parent = hit.collider.transform;
-                Debug.DrawRay(hit.point , hit.normal * 4, Color.red);
+                m_surfacePos = hit.point;
+                m_surfaceHit = true;
+                m_partTransform.forward = hit.normal;
+                m_partTransform.position = hit.point + hit.normal;
+                m_partTransform.parent = hit.collider.transform;
+                Debug.DrawRay(hit.point, hit.normal * 4, Color.red);
             }
             else
             {
-                
-                hasSurfacetoHit = false;
-                PartTransform.parent = null;
-                MouseWorldPos = mainCam.ScreenToWorldPoint(mousePos);
-                
-                if(canTakePart) 
-                    PartTransform.position = MouseWorldPos;
+
+                m_surfaceHit = false;
+                m_partTransform.parent = null;
+                m_mouseWorldPod = m_mainCam.ScreenToWorldPoint(mousePos);
+
+                if (m_canTakePart)
+                    m_partTransform.position = m_mouseWorldPod;
             }
         }
 
@@ -94,28 +94,17 @@ public class MousePartPlacer : MonoBehaviour
     void Stick(GameObject hitObject)
     {
 
-        if(hasSurfacetoHit)
+        if (m_surfaceHit)
         {
-            Vector3 finalPos = PartTransform.GetComponent<Collider>().ClosestPoint(surfacePos);
-            Debug.Log(PartTransform.GetComponent<Collider>().ClosestPoint(surfacePos));
-
-            /*if(hitObject.GetComponent<Entity>().isConnectedToPod)
-            {
-                Transform[] massParts = PartTransform.transform.GetComponentsInChildren<Transform>();
-                    foreach(Transform part in massParts)
-                        if(part.gameObject.GetComponent<Entity>())
-                            if(part.gameObject.GetComponent<Entity>().isConnectedToPod)
-                                GameObject.FindObjectOfType<Pod>().AddMass(part.gameObject);
-            }*/
-
-            PartTransform.position = surfacePos - (finalPos - PartTransform.position);
+            Vector3 finalPos = m_partTransform.GetComponent<Collider>().ClosestPoint(m_surfacePos);
+            m_partTransform.position = m_surfacePos - (finalPos - m_partTransform.position);
             GameObject.FindObjectOfType<Pod>().RecalculateRocket();
-            canTakePart = false;
+            m_canTakePart = false;
         }
         else
         {
-            PartTransform.GetComponent<JointFixer>().StickPart();
-            PartTransform.gameObject.layer = 9;
+            m_partTransform.GetComponent<JointFixer>().StickPart();
+            m_partTransform.gameObject.layer = 9;
         }
     }
 }

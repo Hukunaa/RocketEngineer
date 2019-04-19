@@ -219,8 +219,9 @@ MonoBehaviour:
   PowerFactor: 0
   FuelCost: 15
   EngineNozzle: {fileID: 3092376363821163720}
-  Power: 6000000
+  Power: 700000
   Pod: {fileID: 0}
+  FuelTank: {fileID: 0}
 --- !u!114 &517922094808740907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,7 +235,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isConnectedToPod: 0
-  mass: 500
+  mass: 450
+  finalmass: 0
 --- !u!114 &7570161458118731244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,20 +249,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f5e369a688ed74f90144f5981b84c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pod: {fileID: 0}
-  PodRigidbody: {fileID: 0}
-  NORMAL: {x: 0, y: 0, z: 0}
-  FINALNORMAL: {x: 0, y: 0, z: 0}
-  Torque: {x: 0, y: 0, z: 0}
-  velocity: {x: 0, y: 0, z: 0}
-  foundPod: 0
-  finalAngle: 0
-  anglePower: 0
-  RotationPID:
-    Kp: 500
-    Ki: 375
-    Kd: 25
-    value: 0
+  m_pod: {fileID: 0}
+  m_podRigidbody: {fileID: 0}
+  TorqueThreshold: 0
+  m_airResistance: 0
 --- !u!1001 &5591613797135687112
 PrefabInstance:
   m_ObjectHideFlags: 0

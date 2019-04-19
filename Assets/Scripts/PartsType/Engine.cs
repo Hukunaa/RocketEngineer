@@ -7,7 +7,7 @@ public class Engine : MonoBehaviour
 
     public float PowerFactor = 0.0f;
     public float FuelCost;
-    
+
     public GameObject EngineNozzle;
     public int Power;
 
@@ -26,13 +26,14 @@ public class Engine : MonoBehaviour
     }
 
     void Update()
-    {   
-        if(!foundPod)
-        {   for(int i = 0; i < 10; ++i)
+    {
+        if (!foundPod)
+        {
+            for (int i = 0; i < 10; ++i)
             {
-                if(!Pod.CompareTag("PodPart"))
+                if (!Pod.CompareTag("PodPart"))
                 {
-                    if(Pod.transform.parent != null)
+                    if (Pod.transform.parent != null)
                         Pod = Pod.transform.parent.gameObject;
                 }
                 else
@@ -43,12 +44,13 @@ public class Engine : MonoBehaviour
             }
         }
 
-        if(!foundFuelTank)
-        {   for(int i = 0; i < 10; ++i)
+        if (!foundFuelTank)
+        {
+            for (int i = 0; i < 10; ++i)
             {
-                if(!FuelTank.GetComponent<FuelTank>())
+                if (!FuelTank.GetComponent<FuelTank>())
                 {
-                    if(FuelTank.transform.parent != null)
+                    if (FuelTank.transform.parent != null)
                         FuelTank = FuelTank.transform.parent.gameObject;
                 }
                 else
@@ -60,20 +62,20 @@ public class Engine : MonoBehaviour
         }
 
 
-        if(Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             PowerFactor += 0.01f;
         }
 
-        if(Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.LeftControl))
         {
             PowerFactor -= 0.01f;
         }
 
-        if(PowerFactor <= 0.0f)
+        if (PowerFactor <= 0.0f)
             PowerFactor = 0;
 
-        if(PowerFactor >= 1.0f)
+        if (PowerFactor >= 1.0f)
             PowerFactor = 1;
 
     }
@@ -81,10 +83,10 @@ public class Engine : MonoBehaviour
     void FixedUpdate()
     {
 
-        if(GetComponent<Entity>().isConnectedToPod && FuelTank != gameObject && FuelTank.GetComponent<FuelTank>().tank.tankFuel > 0)
+        if (GetComponent<Entity>().isConnectedToPod && FuelTank != gameObject && FuelTank.GetComponent<FuelTank>().tank.tankFuel > 0)
         {
             Pod.GetComponent<Rigidbody>().AddForceAtPosition(EngineNozzle.transform.up * Power * PowerFactor, EngineNozzle.transform.position);
-            FuelTank.GetComponent<FuelTank>().tank.tankFuel -= FuelCost / 100 * PowerFactor; 
+            FuelTank.GetComponent<FuelTank>().tank.tankFuel -= FuelCost / 100 * PowerFactor;
         }
     }
 }

@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ccf2e6ffecc6d4d8a43db8cd0dc0e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tankFuel: 100000
+  tankFuel: 80000
   tank: {fileID: 0}
 --- !u!114 &8907750377674215855
 MonoBehaviour:
@@ -154,15 +154,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f5e369a688ed74f90144f5981b84c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pod: {fileID: 0}
-  PodRigidbody: {fileID: 0}
+  m_pod: {fileID: 0}
+  m_podRigidbody: {fileID: 0}
   TorqueThreshold: 0
-  AirResistance: 0
-  RotationPID:
-    Kp: 500
-    Ki: 375
-    Kd: 25
-    value: 0
+  m_airResistance: 0
 --- !u!1001 &52718946151766435
 PrefabInstance:
   m_ObjectHideFlags: 0

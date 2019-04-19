@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OriginShifting : MonoBehaviour
 {
-    
+
     [SerializeField] private float OriginThreshold;
     public Transform[] WorldGameObjs;
     private Vector3 lastPos;
@@ -18,15 +18,15 @@ public class OriginShifting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if( transform.position.x > OriginThreshold || transform.position.x < -OriginThreshold ||
+        if (transform.position.x > OriginThreshold || transform.position.x < -OriginThreshold ||
             transform.position.y > OriginThreshold || transform.position.y < -OriginThreshold ||
             transform.position.z > OriginThreshold || transform.position.z < -OriginThreshold)
-            {
-                lastPos = transform.position;
-                foreach(Transform obj in WorldGameObjs)
-                    if(obj.parent == null)
-                        obj.position -= lastPos;
-            }
+        {
+            lastPos = transform.position;
+            foreach (Transform obj in WorldGameObjs)
+                if (obj.parent == null)
+                    obj.position -= lastPos;
+        }
 
     }
 

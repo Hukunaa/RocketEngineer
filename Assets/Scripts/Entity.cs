@@ -10,26 +10,26 @@ public class Entity : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(gameObject.GetComponent<Pod>())
+        if (gameObject.GetComponent<Pod>())
             isConnectedToPod = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(GetComponent<FuelTank>())
+        if (GetComponent<FuelTank>())
         {
             finalmass = GetComponent<FuelTank>().tankFuel + mass;
         }
         else
             finalmass = mass;
-            
-        if(transform.parent)
+
+        if (transform.parent)
         {
-            if(transform.parent.GetComponent<Entity>().isConnectedToPod)
+            if (transform.parent.GetComponent<Entity>().isConnectedToPod)
                 isConnectedToPod = true;
         }
-        else if(gameObject.GetComponent<Pod>())
+        else if (gameObject.GetComponent<Pod>())
             isConnectedToPod = true;
         else
             isConnectedToPod = false;

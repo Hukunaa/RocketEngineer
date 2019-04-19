@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FuelTank : MonoBehaviour {
+public class FuelTank : MonoBehaviour
+{
 
     public float tankFuel;
     private GameObject parentTank;
@@ -18,13 +19,13 @@ public class FuelTank : MonoBehaviour {
 
     private void Update()
     {
-        if(!foundParent)
+        if (!foundParent)
         {
-             for(int i = 0; i < 10; ++i)
+            for (int i = 0; i < 10; ++i)
             {
-                if( parentTank == gameObject)
+                if (parentTank == gameObject)
                 {
-                    if(parentTank.transform.parent != null)
+                    if (parentTank.transform.parent != null)
                         parentTank = parentTank.transform.parent.gameObject;
                 }
                 else
@@ -35,11 +36,11 @@ public class FuelTank : MonoBehaviour {
             }
         }
 
-        if(parentTank != gameObject)
+        if (parentTank != gameObject)
         {
-            if(parentTank.GetComponent<FuelTank>())
+            if (parentTank.GetComponent<FuelTank>())
             {
-                if(parentTank.GetComponent<FuelTank>().tankFuel > 0)
+                if (parentTank.GetComponent<FuelTank>().tankFuel > 0)
                     tank = parentTank.GetComponent<FuelTank>();
                 else
                     tank = GetComponent<FuelTank>();
