@@ -7,6 +7,7 @@ public class GravityCore : MonoBehaviour
 
     Rigidbody[] Rockets;
     public float planetMass;
+    public float AtmosphereThickness;
 
     // Start is called before the first frame update
     void Start()

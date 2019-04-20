@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ccf2e6ffecc6d4d8a43db8cd0dc0e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tankFuel: 80000
+  tankFuel: 5000
   tank: {fileID: 0}
 --- !u!114 &8907750377674215855
 MonoBehaviour:

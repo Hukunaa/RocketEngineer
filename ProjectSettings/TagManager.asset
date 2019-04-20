@@ -9,6 +9,7 @@ TagManager:
   - Part
   - CameraRotatorEdit
   - GameStateManager
+  - Planet
   layers:
   - Default
   - TransparentFX

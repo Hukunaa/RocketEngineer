@@ -7,6 +7,8 @@ using UnityEngine.Profiling;
 public class AeroDynamicsCore : MonoBehaviour
 {
     public GameObject m_pod;
+    public GameObject m_currentPlanet;
+
     public Rigidbody m_podRigidbody;
     public float TorqueThreshold;
 
@@ -49,7 +51,17 @@ public class AeroDynamicsCore : MonoBehaviour
 
     void Update()
     {
-        m_airResistance = FindObjectOfType<PhysicsSettings>().AirResistance;
+        //TEMPORARY
+        if(m_currentPlanet != null)
+        {
+            m_airResistance = 1 - Mathf.Clamp01((Vector3.Distance(m_pod.transform.position, m_currentPlanet.transform.position) - 637100) / (637100 + m_currentPlanet.GetComponent<GravityCore>().AtmosphereThickness));
+        }
+        else if(m_currentPlanet == null)
+        {
+            m_currentPlanet = GameObject.FindWithTag("Planet");
+            m_airResistance = 0;
+        }
+        //--------------------
 
         if (!m_pod.GetComponent<Rigidbody>())
         {
@@ -129,4 +141,18 @@ public class AeroDynamicsCore : MonoBehaviour
             m_finalPos /= j;
         }
     }
+
+    /*void OnTriggerEnter(Collider col)
+    {
+        if (col.transform.parent.CompareTag("Planet"))
+        {
+            m_atmospherePoint = transform.position;
+            m_atmosphere = col.gameObject;
+        }
+    }
+    void OnTriggerExit(Collider col)
+    {
+        if (m_atmosphere == col.gameObject)
+            m_atmosphere = null;
+    }*/
 }

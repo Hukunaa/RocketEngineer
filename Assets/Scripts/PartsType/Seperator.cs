@@ -58,6 +58,14 @@ public class Seperator : MonoBehaviour
         MainPart.GetComponent<Pod>().isSetup = true;
         MainPart.GetComponent<Pod>().RecalculateRocket();
         MainPart.GetComponent<AeroDynamicsCore>().FindPod();
+        for(int i = 0; i < MainPart.transform.childCount; ++i)
+        {
+            if(MainPart.transform.GetChild(i).GetComponent<Entity>())
+            {
+                MainPart.transform.GetChild(i).GetComponent<AeroDynamicsCore>().FindPod();
+            }
+        }
+
         MainPart.GetComponent<Pod>().Launched = true;
 
         Pod.GetComponent<Pod>().RecalculateRocket();
