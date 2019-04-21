@@ -32,6 +32,11 @@ public class Pod : MonoBehaviour
         //CONTROL SYSTEM
         if (isBuilt)
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                GameStatus.LoadEditor();
+            }
+
             if (Input.GetKeyDown(KeyCode.O))
             {
                 GetComponent<OriginShifting>().ReloadWorldObjects();

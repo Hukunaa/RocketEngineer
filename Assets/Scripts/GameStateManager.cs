@@ -33,4 +33,14 @@ public class GameStateManager : MonoBehaviour
         SceneManager.LoadScene("SandBox");
         GameObject.FindObjectOfType<Pod>().Build();
     }
+
+    public void LoadEditor()
+    {
+        Game = GameState.BUILDING;
+        
+        foreach(Transform obj in FindObjectsOfType<Transform>())
+            Destroy(obj.gameObject);
+
+        SceneManager.LoadScene("BuildEditor");
+    }
 }

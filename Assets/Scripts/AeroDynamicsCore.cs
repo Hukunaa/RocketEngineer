@@ -79,7 +79,6 @@ public class AeroDynamicsCore : MonoBehaviour
         if (m_podRigidbody != null)
         {
             velocity = Vector3d.FromVector3(m_podRigidbody.velocity);
-            velocityf = m_podRigidbody.velocity;
         }
 
 

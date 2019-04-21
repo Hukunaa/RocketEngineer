@@ -27,9 +27,9 @@ public class OriginShifting : MonoBehaviour
         {
             aero.enabled = true;
         }
-        
+
         OriginThreshold = GameObject.FindWithTag("GameStateManager").GetComponent<PhysicsSettings>().OriginThreshold;
-        if (GetComponent<Rigidbody>().position.magnitude > OriginThreshold)
+        if (GetComponent<Rigidbody>().position.magnitude > OriginThreshold && GameObject.FindObjectOfType<GameStateManager>().Game == GameStateManager.GameState.SIMULATING)
         {
             offset = mainTarget.transform.position;
             mainTarget.transform.position -= offset;
