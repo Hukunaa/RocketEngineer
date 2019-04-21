@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.32332358, g: 0.46910635, b: 0.7755101, a: 1}
+  m_IndirectSpecularColor: {r: 0.32332358, g: 0.4691064, b: 0.77551025, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -287,8 +287,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_pod: {fileID: 0}
+  m_currentPlanet: {fileID: 0}
+  m_atmosphereCruve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   m_podRigidbody: {fileID: 0}
   TorqueThreshold: 0
+  velocityf: {x: 0, y: 0, z: 0}
   m_airResistance: 0
 --- !u!64 &115691166
 MeshCollider:
@@ -1101,8 +1109,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_pod: {fileID: 0}
+  m_currentPlanet: {fileID: 0}
+  m_atmosphereCruve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   m_podRigidbody: {fileID: 0}
   TorqueThreshold: 0
+  velocityf: {x: 0, y: 0, z: 0}
   m_airResistance: 0
 --- !u!114 &601978638
 MonoBehaviour:
@@ -1887,8 +1903,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_pod: {fileID: 0}
+  m_currentPlanet: {fileID: 0}
+  m_atmosphereCruve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   m_podRigidbody: {fileID: 0}
   TorqueThreshold: 0
+  velocityf: {x: 0, y: 0, z: 0}
   m_airResistance: 0
 --- !u!114 &913333751
 MonoBehaviour:
@@ -3097,6 +3121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AirResistance: 1
+  OriginThreshold: 6000
 --- !u!1 &1819845698
 GameObject:
   m_ObjectHideFlags: 0
