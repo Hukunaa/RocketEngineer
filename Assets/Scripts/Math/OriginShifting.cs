@@ -8,24 +8,83 @@ public class OriginShifting : MonoBehaviour
     [SerializeField] private float OriginThreshold;
     public Transform[] WorldGameObjs;
     private Vector3 lastPos;
+    public Vector3 offset;
+    public GameObject mainTarget;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        mainTarget = gameObject;
         lastPos = Vector3.zero;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (transform.position.x > OriginThreshold || transform.position.x < -OriginThreshold ||
-            transform.position.y > OriginThreshold || transform.position.y < -OriginThreshold ||
-            transform.position.z > OriginThreshold || transform.position.z < -OriginThreshold)
+
+        foreach(AeroDynamicsCore aero in GameObject.FindObjectsOfType<AeroDynamicsCore>())
         {
-            lastPos = transform.position;
+            aero.enabled = true;
+        }
+        
+        OriginThreshold = GameObject.FindWithTag("GameStateManager").GetComponent<PhysicsSettings>().OriginThreshold;
+        if (GetComponent<Rigidbody>().position.magnitude > OriginThreshold)
+        {
+            offset = mainTarget.transform.position;
+            mainTarget.transform.position -= offset;
+
             foreach (Transform obj in WorldGameObjs)
-                if (obj.parent == null)
-                    obj.position -= lastPos;
+            {
+                if(obj.transform.parent == null && obj.gameObject != gameObject)
+                {
+                    Debug.Log("LOL");
+                    Vector3 velocity = GetComponent<Rigidbody>().velocity;
+                    Vector3 velocityA = GetComponent<Rigidbody>().angularVelocity;
+                    Quaternion rotation = GetComponent<Rigidbody>().rotation;
+                    GetComponent<Rigidbody>().isKinematic = true;
+
+                    obj.transform.position -= offset;
+                    foreach(AeroDynamicsCore aero in GameObject.FindObjectsOfType<AeroDynamicsCore>())
+                    {
+                        aero.enabled = false;
+                    }
+
+                    GetComponent<Rigidbody>().velocity = velocity;
+                    GetComponent<Rigidbody>().angularVelocity = velocityA;
+                    GetComponent<Rigidbody>().rotation = rotation;
+                    GetComponent<Rigidbody>().isKinematic = false;
+                }
+                
+                /*if (obj.parent == null)
+                {
+                    obj.transform.position -= pos;
+                }*/
+            }
+            /*if (GetComponent<Rigidbody>())
+            {
+                lastPos = GetComponent<Rigidbody>().position;
+            }
+
+            foreach (Transform obj in WorldGameObjs)
+            {
+                if (obj.GetComponent<Rigidbody>())
+                {
+                    Vector3 velocity = obj.GetComponent<Rigidbody>().velocity;
+                    Vector3 velocityA = obj.GetComponent<Rigidbody>().angularVelocity;
+                    obj.GetComponent<Rigidbody>().detectCollisions = false;
+                    obj.GetComponent<Rigidbody>().position -= lastPos;
+                    obj.GetComponent<Rigidbody>().velocity = velocity;
+                    obj.GetComponent<Rigidbody>().angularVelocity = velocityA;
+                }
+                else
+                {
+                    if (obj.parent == null)
+                        obj.position -= lastPos;
+
+                }
+
+            }*/
         }
 
     }

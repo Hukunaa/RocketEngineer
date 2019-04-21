@@ -8,7 +8,7 @@ public class AeroDynamicsCore : MonoBehaviour
 {
     public GameObject m_pod;
     public GameObject m_currentPlanet;
-
+    public AnimationCurve m_atmosphereCruve;
     public Rigidbody m_podRigidbody;
     public float TorqueThreshold;
 
@@ -24,6 +24,7 @@ public class AeroDynamicsCore : MonoBehaviour
     public Vector3d m_force;
 
     private Vector3d velocity;
+    [SerializeField] private Vector3 velocityf;
     public float m_airResistance;
 
     void Start()
@@ -51,12 +52,14 @@ public class AeroDynamicsCore : MonoBehaviour
 
     void Update()
     {
+        float m_distance;
         //TEMPORARY
-        if(m_currentPlanet != null)
+        if (m_currentPlanet != null)
         {
-            m_airResistance = 1 - Mathf.Clamp01((Vector3.Distance(m_pod.transform.position, m_currentPlanet.transform.position) - 637100) / (637100 + m_currentPlanet.GetComponent<GravityCore>().AtmosphereThickness));
+            m_distance = Mathf.Clamp01((Vector3.Distance(m_pod.transform.position, m_currentPlanet.transform.position) - 637100) / (637100 + m_currentPlanet.GetComponent<GravityCore>().AtmosphereThickness));
+            m_airResistance = m_atmosphereCruve.Evaluate(m_distance);
         }
-        else if(m_currentPlanet == null)
+        else if (m_currentPlanet == null)
         {
             m_currentPlanet = GameObject.FindWithTag("Planet");
             m_airResistance = 0;
@@ -74,14 +77,17 @@ public class AeroDynamicsCore : MonoBehaviour
         }
 
         if (m_podRigidbody != null)
+        {
             velocity = Vector3d.FromVector3(m_podRigidbody.velocity);
+            velocityf = m_podRigidbody.velocity;
+        }
 
 
 
         CalculateAerodynamics();
         m_finalNormal = Vector3d.FromVector3(transform.rotation * Vector3d.FromVector3d(m_normal));
-        m_force = m_finalNormal.normalized * ((velocity.magnitude * velocity.magnitude) * m_airResistance);
-        m_force = 1.225f * ((m_finalNormal.normalized * ((velocity.magnitude * velocity.magnitude)) / 2) * m_airResistance);
+        //m_force = m_finalNormal.normalized * ((velocity.magnitude * velocity.magnitude) * m_airResistance);
+        m_force = (1.225f * ((m_finalNormal.normalized * ((velocity.magnitude * velocity.magnitude)) / 2) * m_airResistance) / 10);
     }
 
     public void OnDrawGizmos()
@@ -89,7 +95,7 @@ public class AeroDynamicsCore : MonoBehaviour
         Gizmos.color = Color.magenta;
         Gizmos.DrawRay(transform.position, Vector3d.FromVector3d(velocity));
         Gizmos.color = Color.blue;
-        Gizmos.DrawRay(transform.position, Vector3d.FromVector3d(m_finalNormal));
+        Gizmos.DrawRay(transform.position, Vector3d.FromVector3d(m_force * 10));
     }
     void FixedUpdate()
     {

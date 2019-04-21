@@ -25,7 +25,7 @@ public class Pod : MonoBehaviour
 
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (Speed == null)
             Speed = GameObject.Find("Speed").GetComponent<Text>();
@@ -46,6 +46,11 @@ public class Pod : MonoBehaviour
             {
                 RecalculateRocket();
                 lastTime = Time.time + 0.5f;
+            }
+
+            if (Input.GetKey(KeyCode.K))
+            {
+                GetComponent<Rigidbody>().AddForce(transform.up * 1000000);
             }
 
             if (!isSetup && GameObject.Find("RocketSpawn"))
