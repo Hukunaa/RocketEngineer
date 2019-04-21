@@ -198,9 +198,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4310813648032077075}
   serializedVersion: 2
-  m_Mass: 10000
+  m_Mass: 10
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxEnergy: 500
-  mass: 400
+  mass: 4
   isSetup: 0
   Launched: 0
 --- !u!114 &6822933123517722739
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isConnectedToPod: 0
-  mass: 4200
+  mass: 4.2
   finalmass: 0
 --- !u!114 &3948897099939454268
 MonoBehaviour:
@@ -250,8 +250,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_pod: {fileID: 0}
+  m_currentPlanet: {fileID: 0}
+  m_atmosphereCruve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.99528503
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.054747254
+      value: 0.50100815
+      inSlope: -9.786787
+      outSlope: -9.786787
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.09120564
+    - serializedVersion: 3
+      time: 0.18914105
+      value: 0.011398198
+      inSlope: -0.0744509
+      outSlope: -0.0744509
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.37569377
+      outWeight: 0.07093853
+    - serializedVersion: 3
+      time: 0.9990251
+      value: -0.0023078914
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   m_podRigidbody: {fileID: 0}
   TorqueThreshold: 0.001
+  velocityf: {x: 0, y: 0, z: 0}
   m_airResistance: 0
 --- !u!114 &1542146157972617659
 MonoBehaviour:
@@ -265,5 +309,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1452ce2a78db46c42a657938e4ea8940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OriginThreshold: 6000
+  OriginThreshold: 1000
   WorldGameObjs: []

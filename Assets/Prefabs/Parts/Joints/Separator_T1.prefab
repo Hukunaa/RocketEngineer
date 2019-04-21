@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isConnectedToPod: 0
-  mass: 25
+  mass: 0.1
   finalmass: 0
 --- !u!114 &6044395474491678349
 MonoBehaviour:
