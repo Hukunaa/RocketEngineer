@@ -10,11 +10,15 @@ public class OriginShifting : MonoBehaviour
     private Vector3 lastPos;
     public Vector3 offset;
     public GameObject mainTarget;
-
+    public bool teleported;
+    Vector3 velocity;
+    Vector3 velocityA;
+    Quaternion rotation;
 
     // Start is called before the first frame update
     void Start()
     {
+        teleported = false;
         mainTarget = gameObject;
         lastPos = Vector3.zero;
     }
@@ -27,7 +31,13 @@ public class OriginShifting : MonoBehaviour
         {
             aero.enabled = true;
         }
-
+        if(teleported == true)
+        {
+            GetComponent<Rigidbody>().velocity = velocity;
+            GetComponent<Rigidbody>().angularVelocity = velocityA;
+            GetComponent<Rigidbody>().rotation = rotation;
+            teleported = false;
+        }
         OriginThreshold = GameObject.FindWithTag("GameStateManager").GetComponent<PhysicsSettings>().OriginThreshold;
         if (GetComponent<Rigidbody>().position.magnitude > OriginThreshold && GameObject.FindObjectOfType<GameStateManager>().Game == GameStateManager.GameState.SIMULATING)
         {
@@ -39,21 +49,16 @@ public class OriginShifting : MonoBehaviour
                 if(obj.transform.parent == null && obj.gameObject != gameObject)
                 {
                     Debug.Log("LOL");
-                    Vector3 velocity = GetComponent<Rigidbody>().velocity;
-                    Vector3 velocityA = GetComponent<Rigidbody>().angularVelocity;
-                    Quaternion rotation = GetComponent<Rigidbody>().rotation;
-                    GetComponent<Rigidbody>().isKinematic = true;
+                    velocity = GetComponent<Rigidbody>().velocity;
+                    velocityA = GetComponent<Rigidbody>().angularVelocity;
+                    rotation = GetComponent<Rigidbody>().rotation;
 
-                    obj.transform.position -= offset;
                     foreach(AeroDynamicsCore aero in GameObject.FindObjectsOfType<AeroDynamicsCore>())
                     {
                         aero.enabled = false;
                     }
-
-                    GetComponent<Rigidbody>().velocity = velocity;
-                    GetComponent<Rigidbody>().angularVelocity = velocityA;
-                    GetComponent<Rigidbody>().rotation = rotation;
-                    GetComponent<Rigidbody>().isKinematic = false;
+                    obj.transform.position -= offset;
+                    teleported = true;
                 }
                 
                 /*if (obj.parent == null)

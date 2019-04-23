@@ -48,11 +48,13 @@ public class MousePartPlacer : MonoBehaviour
             else if (m_isOnGhost == true)
             {
                 Stick(m_partTransform.gameObject);
-                GameObject.FindObjectOfType<Pod>().RecalculateRocket();
                 m_partTransform.gameObject.layer = 9;
                 m_isOnGhost = false;
                 m_partTransform = null;
             }
+
+            if(GameObject.FindObjectOfType<Pod>())
+                GameObject.FindObjectOfType<Pod>().RecalculateRocket();
         }
 
         if (m_isOnGhost && GameStatus.Game == GameStateManager.GameState.BUILDING)
@@ -98,7 +100,6 @@ public class MousePartPlacer : MonoBehaviour
         {
             Vector3 finalPos = m_partTransform.GetComponent<Collider>().ClosestPoint(m_surfacePos);
             m_partTransform.position = m_surfacePos - (finalPos - m_partTransform.position);
-            GameObject.FindObjectOfType<Pod>().RecalculateRocket();
             m_canTakePart = false;
         }
         else

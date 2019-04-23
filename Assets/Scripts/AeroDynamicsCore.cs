@@ -56,7 +56,7 @@ public class AeroDynamicsCore : MonoBehaviour
         //TEMPORARY
         if (m_currentPlanet != null)
         {
-            m_distance = Mathf.Clamp01((Vector3.Distance(m_pod.transform.position, m_currentPlanet.transform.position) - 637100) / (637100 + m_currentPlanet.GetComponent<GravityCore>().AtmosphereThickness));
+            m_distance = Mathf.Clamp01(m_pod.GetComponent<Pod>().m_altitude / m_currentPlanet.GetComponent<GravityCore>().AtmosphereThickness);
             m_airResistance = m_atmosphereCruve.Evaluate(m_distance);
         }
         else if (m_currentPlanet == null)
@@ -86,7 +86,7 @@ public class AeroDynamicsCore : MonoBehaviour
         CalculateAerodynamics();
         m_finalNormal = Vector3d.FromVector3(transform.rotation * Vector3d.FromVector3d(m_normal));
         //m_force = m_finalNormal.normalized * ((velocity.magnitude * velocity.magnitude) * m_airResistance);
-        m_force = (1.225f * ((m_finalNormal.normalized * ((velocity.magnitude * velocity.magnitude)) / 2) * m_airResistance) / 10);
+        m_force = ((m_finalNormal.normalized * ((velocity.magnitude * velocity.magnitude)) / 2) * m_airResistance) / 1000;
     }
 
     public void OnDrawGizmos()

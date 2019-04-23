@@ -19,8 +19,8 @@ public class Entity : MonoBehaviour
     {
         if (GetComponent<FuelTank>())
         {
-            finalmass = GetComponent<FuelTank>().tankFuel + mass;
-            
+            finalmass = (GetComponent<FuelTank>().tankFuel * GetComponent<FuelTank>().fuelDensity) + mass;
+
         }
         else
             finalmass = mass;

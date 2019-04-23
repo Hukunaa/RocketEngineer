@@ -32,6 +32,7 @@ public class GameStateManager : MonoBehaviour
         DontDestroyOnLoad(GameObject.FindObjectOfType<Pod>());
         SceneManager.LoadScene("SandBox");
         GameObject.FindObjectOfType<Pod>().Build();
+        GameObject.FindObjectOfType<Pod>().RecalculateRocket();
     }
 
     public void LoadEditor()

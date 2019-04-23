@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tankFuel: 500
+  fuelDensity: 0.08
   tank: {fileID: 0}
 --- !u!114 &8907750377674215855
 MonoBehaviour:
@@ -140,7 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isConnectedToPod: 0
-  mass: 1
+  mass: 0.25
   finalmass: 0
 --- !u!114 &3700431457173914936
 MonoBehaviour:

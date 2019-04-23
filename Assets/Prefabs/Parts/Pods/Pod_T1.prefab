@@ -218,10 +218,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fd8de5bc030fe944a5516cc0039dd4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxEnergy: 500
-  mass: 4
-  isSetup: 0
-  Launched: 0
+  m_maxEnergy: 500
+  m_mass: 0
+  m_isSet: 0
+  m_launched: 0
+  m_speed: 0
+  m_altitude: 0
 --- !u!114 &6822933123517722739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,7 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isConnectedToPod: 0
-  mass: 4.2
+  mass: 0.42
   finalmass: 0
 --- !u!114 &3948897099939454268
 MonoBehaviour:
@@ -256,7 +258,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.99528503
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -264,26 +266,17 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.054747254
-      value: 0.50100815
-      inSlope: -9.786787
-      outSlope: -9.786787
+      time: 0.2144332
+      value: 0.34150478
+      inSlope: -1.4939947
+      outSlope: -1.4939947
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.09120564
-    - serializedVersion: 3
-      time: 0.18914105
-      value: 0.011398198
-      inSlope: -0.0744509
-      outSlope: -0.0744509
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.37569377
-      outWeight: 0.07093853
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.9990251
-      value: -0.0023078914
+      value: 0.0024070744
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -311,3 +304,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OriginThreshold: 1000
   WorldGameObjs: []
+  offset: {x: 0, y: 0, z: 0}
+  mainTarget: {fileID: 0}
+  teleported: 0

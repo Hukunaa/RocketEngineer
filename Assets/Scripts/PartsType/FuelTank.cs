@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class FuelTank : MonoBehaviour
 {
-
     public float tankFuel;
     private GameObject parentTank;
     private bool foundParent;
-
+    public float fuelDensity;
     public FuelTank tank;
 
     private void Start()

@@ -29,7 +29,7 @@ public class SolarPanel : MonoBehaviour {
         if(transform.parent == Pod.transform)
         {
             Debug.Log("LOOOl");
-            Pod.GetComponent<Pod>().MaxEnergy += maxEnergyOutput * energyFactor;
+            Pod.GetComponent<Pod>().m_maxEnergy += maxEnergyOutput * energyFactor;
         }
 
 	}

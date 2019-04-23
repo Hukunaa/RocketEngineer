@@ -55,7 +55,7 @@ public class Seperator : MonoBehaviour
         
         MainPart.transform.parent = null;
         MainPart.GetComponent<Pod>().Build();
-        MainPart.GetComponent<Pod>().isSetup = true;
+        MainPart.GetComponent<Pod>().m_isSet = true;
         MainPart.GetComponent<Pod>().RecalculateRocket();
         MainPart.GetComponent<AeroDynamicsCore>().FindPod();
         for(int i = 0; i < MainPart.transform.childCount; ++i)
@@ -66,7 +66,7 @@ public class Seperator : MonoBehaviour
             }
         }
 
-        MainPart.GetComponent<Pod>().Launched = true;
+        MainPart.GetComponent<Pod>().m_launched = true;
 
         Pod.GetComponent<Pod>().RecalculateRocket();
         MainPart.GetComponent<Rigidbody>().velocity = Pod.GetComponent<Rigidbody>().velocity;
