@@ -51,7 +51,8 @@ public class PlayerFollow : MonoBehaviour
         Quaternion finalRot = Quaternion.Euler(yRot, xRot, 0);
 
         m_distance += Input.GetAxis("Mouse ScrollWheel") * 8;
-        transform.position = Vector3.Slerp(transform.position, finalRot * new Vector3(0, 0, m_distance) + finalPos, 0.9f);
+        transform.position = finalRot * new Vector3(0, 0, m_distance) + finalPos;
+        //transform.position = Vector3.Slerp(transform.position, finalRot * new Vector3(0, 0, m_distance) + finalPos, 0.9f);
         transform.rotation = Quaternion.Slerp(transform.rotation, finalRot, 0.4f);
 
     }
