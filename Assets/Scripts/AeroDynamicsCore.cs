@@ -56,7 +56,7 @@ public class AeroDynamicsCore : MonoBehaviour
         //TEMPORARY
         if (m_currentPlanet != null)
         {
-            m_distance = Mathf.Clamp01(m_pod.GetComponent<Pod>().m_altitude / m_currentPlanet.GetComponent<GravityCore>().AtmosphereThickness);
+            m_distance = 1 - Mathf.Clamp01(m_pod.GetComponent<Pod>().m_altitude / m_currentPlanet.GetComponent<GravityCore>().AtmosphereThickness);
             m_airResistance = m_atmosphereCruve.Evaluate(m_distance);
         }
         else if (m_currentPlanet == null)

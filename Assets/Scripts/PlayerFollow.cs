@@ -5,32 +5,36 @@ public class PlayerFollow : MonoBehaviour
 {
 
     public float turnSpeed = 0.0f;
-    public Transform player;
-
-    public Vector3 offset;
-
+    public float moveSpeed = 0.0f;
+    public Vector3 m_offset;
+    private Vector3 m_origin;
+    private Vector3 playerPos;
     private float xRot;
     private float yRot;
-    private float distance;
+    private float m_distance;
 
     void Start()
     {
         xRot = 0;
         yRot = 0;
-        distance = -20;
-        offset = transform.position;
+
+        m_origin = Vector3.zero;
+        m_distance = -20;
+        m_offset = transform.position;
     }
 
     void FixedUpdate()
     {
-        if (player == null)
+        Vector3 finalPos = Vector3.zero;
+        
+        if(FindObjectOfType<GameStateManager>().Game == GameStateManager.GameState.BUILDING)
         {
-            if (GameObject.Find("RotationPoint"))
-            {
-                player = GameObject.Find("RotationPoint").transform;
-            }
-            else if (GameObject.FindObjectOfType<Pod>())
-                player = GameObject.FindObjectOfType<Pod>().transform;
+            finalPos = m_origin;
+        }
+        else if(FindObjectOfType<GameStateManager>().Game == GameStateManager.GameState.SIMULATING)
+        {
+            playerPos = FindObjectOfType<Pod>().transform.position;
+            finalPos = playerPos;
         }
 
         if (Input.GetMouseButton(1))
@@ -38,28 +42,17 @@ public class PlayerFollow : MonoBehaviour
             xRot += Input.GetAxis("Mouse X") * turnSpeed;
             yRot += Input.GetAxis("Mouse Y") * turnSpeed * -1;
         }
+        if(Input.GetMouseButton(2))
+        {
+            m_origin -= transform.right * Input.GetAxis("Mouse X") * moveSpeed;
+            m_origin -= transform.up * Input.GetAxis("Mouse Y") * moveSpeed;
+        }
 
         Quaternion finalRot = Quaternion.Euler(yRot, xRot, 0);
 
-        distance += Input.GetAxis("Mouse ScrollWheel") * 8;
-        transform.position = Vector3.Slerp(transform.position, finalRot * new Vector3(0, 0, distance) + player.transform.position, 0.9f);
+        m_distance += Input.GetAxis("Mouse ScrollWheel") * 8;
+        transform.position = Vector3.Slerp(transform.position, finalRot * new Vector3(0, 0, m_distance) + finalPos, 0.9f);
         transform.rotation = Quaternion.Slerp(transform.rotation, finalRot, 0.4f);
-
-        /* offset.z += Input.GetAxis("Mouse ScrollWheel") * 4;
-        if(Input.GetMouseButton(1))
-        {
-           offset = Quaternion.AngleAxis (Input.GetAxis("Mouse X") * turnSpeed, transform.up) * offset;
-           offset = Quaternion.AngleAxis (-Input.GetAxis("Mouse Y") * turnSpeed, transform.right) * offset;
-
-           if(offset.y > 6)
-               offset.y = 6;
-
-           if(offset.y < -6)
-               offset.y = -6;
-
-        }
-        transform.position = player.position + offset; 
-        transform.LookAt(player.position);*/
 
     }
 }
