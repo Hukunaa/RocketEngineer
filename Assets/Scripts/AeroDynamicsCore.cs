@@ -11,7 +11,7 @@ public class AeroDynamicsCore : MonoBehaviour
     public AnimationCurve m_atmosphereCruve;
     public Rigidbody m_podRigidbody;
     public float TorqueThreshold;
-
+    
     public Vector3d m_normal;
     public Vector3d m_finalNormal;
     private Vector3d m_finalPos;
@@ -80,13 +80,11 @@ public class AeroDynamicsCore : MonoBehaviour
         {
             velocity = Vector3d.FromVector3(m_podRigidbody.velocity);
         }
-
-
-
+        
         CalculateAerodynamics();
         m_finalNormal = Vector3d.FromVector3(transform.rotation * Vector3d.FromVector3d(m_normal));
         //m_force = m_finalNormal.normalized * ((velocity.magnitude * velocity.magnitude) * m_airResistance);
-        m_force = ((m_finalNormal.normalized * ((velocity.magnitude * velocity.magnitude)) / 2) * m_airResistance) / 1000;
+        m_force = ((m_finalNormal.normalized * ((velocity.magnitude * velocity.magnitude))) * m_airResistance) / 1000;
     }
 
     public void OnDrawGizmos()
@@ -98,11 +96,6 @@ public class AeroDynamicsCore : MonoBehaviour
     }
     void FixedUpdate()
     {
-
-        if (Input.GetKey(KeyCode.G))
-        {
-            m_podRigidbody.AddForce(Vector3d.FromVector3d(Vector3d.forward) * 10000);
-        }
         if (m_podRigidbody != null)
             m_podRigidbody.AddForceAtPosition(-Vector3d.FromVector3d(m_force), transform.TransformPoint(Vector3d.FromVector3d(m_finalPos)));
 
@@ -112,6 +105,7 @@ public class AeroDynamicsCore : MonoBehaviour
     {
         m_pod = gameObject;
     }
+
     void CalculateAerodynamics()
     {
         int j = 0;

@@ -1342,7 +1342,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   avgFrameRate: 0
-  display_Text: {fileID: 0}
+  m_fpsText: {fileID: 0}
+  m_speedText: {fileID: 0}
+  m_altitudeText: {fileID: 0}
+  m_atmosphereInfo: {fileID: 0}
 --- !u!114 &698613596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1421,8 +1424,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnSpeed: 4
-  player: {fileID: 1177625762}
-  offset: {x: 0, y: 0, z: 0}
+  moveSpeed: 1
+  m_offset: {x: 0, y: 0, z: 0}
 --- !u!114 &717632180
 MonoBehaviour:
   m_ObjectHideFlags: 0
