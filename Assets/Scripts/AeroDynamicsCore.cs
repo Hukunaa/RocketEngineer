@@ -84,7 +84,7 @@ public class AeroDynamicsCore : MonoBehaviour
         CalculateAerodynamics();
         m_finalNormal = Vector3d.FromVector3(transform.rotation * Vector3d.FromVector3d(m_normal));
         //m_force = m_finalNormal.normalized * ((velocity.magnitude * velocity.magnitude) * m_airResistance);
-        m_force = ((m_finalNormal.normalized * ((velocity.magnitude * velocity.magnitude))) * m_airResistance) / 1000;
+        m_force = (( m_finalNormal.normalized * ( 1.225f * (velocity.magnitude * velocity.magnitude) * 0.5f) ) * m_airResistance) / 2000;
     }
 
     public void OnDrawGizmos()

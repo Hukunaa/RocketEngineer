@@ -38,6 +38,5 @@ public class JointFixer : MonoBehaviour
                 }
             }
         }
-        GameObject.FindObjectOfType<Pod>().RecalculateRocket();
     }
 }

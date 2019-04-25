@@ -8,10 +8,10 @@ public class PlayerFollow : MonoBehaviour
     public float moveSpeed = 0.0f;
     public Vector3 m_offset;
     private Vector3 m_origin;
-    private Vector3 playerPos;
+    private Pod m_player;
+    private float m_distance;
     private float xRot;
     private float yRot;
-    private float m_distance;
 
     void Start()
     {
@@ -33,8 +33,12 @@ public class PlayerFollow : MonoBehaviour
         }
         else if(FindObjectOfType<GameStateManager>().Game == GameStateManager.GameState.SIMULATING)
         {
-            playerPos = FindObjectOfType<Pod>().transform.position;
-            finalPos = playerPos;
+
+            foreach(Pod m_pod in FindObjectsOfType<Pod>())
+                if(m_pod.m_activeVessel == true)
+                    m_player = m_pod;
+
+            finalPos = m_player.transform.position;
         }
 
         if (Input.GetMouseButton(1))
@@ -50,9 +54,8 @@ public class PlayerFollow : MonoBehaviour
 
         Quaternion finalRot = Quaternion.Euler(yRot, xRot, 0);
 
-        m_distance += Input.GetAxis("Mouse ScrollWheel") * 8;
+        m_distance += Input.GetAxis("Mouse ScrollWheel") * 12;
         transform.position = finalRot * new Vector3(0, 0, m_distance) + finalPos;
-        //transform.position = Vector3.Slerp(transform.position, finalRot * new Vector3(0, 0, m_distance) + finalPos, 0.9f);
         transform.rotation = Quaternion.Slerp(transform.rotation, finalRot, 0.4f);
 
     }

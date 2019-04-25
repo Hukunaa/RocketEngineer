@@ -9,6 +9,8 @@ public class FlightInfo : MonoBehaviour
     public Text m_altitudeText;
     public Text m_atmosphereInfo;
 
+    private Pod m_pod;
+
     private float m_speed;
     private float m_altitude;
     private float m_atmosphereRatio;
@@ -18,12 +20,16 @@ public class FlightInfo : MonoBehaviour
     }
     public void Update()
     {
+        foreach(Pod pod in FindObjectsOfType<Pod>())
+            if(pod.m_activeVessel == true)
+                m_pod = pod;
+
         //TEMPORARY BEFORE MULTISHIP INTEGRATION
-        if(FindObjectOfType<Pod>())
+        if(m_pod)
         {
-            m_atmosphereRatio = FindObjectOfType<Pod>().GetComponent<AeroDynamicsCore>().m_airResistance;
-            m_speed = FindObjectOfType<Pod>().m_speed;
-            m_altitude = FindObjectOfType<Pod>().m_altitude;
+            m_atmosphereRatio = m_pod.GetComponent<AeroDynamicsCore>().m_airResistance;
+            m_speed = m_pod.m_speed;
+            m_altitude = m_pod.m_altitude;
         }
 
         //===================

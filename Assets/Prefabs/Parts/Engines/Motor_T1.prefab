@@ -219,7 +219,7 @@ MonoBehaviour:
   PowerFactor: 0
   FuelCost: 15
   EngineNozzle: {fileID: 3092376363821163720}
-  Power: 934
+  Power: 860
   Pod: {fileID: 0}
   FuelTank: {fileID: 0}
 --- !u!114 &517922094808740907

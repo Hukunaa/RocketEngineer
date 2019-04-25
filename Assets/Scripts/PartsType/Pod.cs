@@ -11,7 +11,7 @@ public class Pod : MonoBehaviour
     public bool m_isSet = false;
     public bool m_launched = false;
     private bool m_isBuilt = false;
-
+    public bool m_activeVessel = false;
     private GameStateManager m_gameStatus;
 
     private float m_lastCheck;
@@ -24,6 +24,7 @@ public class Pod : MonoBehaviour
 
     void Start()
     {
+        m_activeVessel = true;
         m_lastCheck = 0;
         m_gameStatus = GameObject.FindObjectOfType<GameStateManager>();
 
