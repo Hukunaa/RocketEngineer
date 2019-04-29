@@ -9,6 +9,9 @@ public class GravityCore : MonoBehaviour
     public float planetMass;
     public float radius;
     public float AtmosphereThickness;
+    public Vector3 finalForce;
+    public GameObject currentRocket;
+    public float gravityAccel;
 
     // Start is called before the first frame update
     void Start()
@@ -22,8 +25,12 @@ public class GravityCore : MonoBehaviour
         Rockets = GameObject.FindObjectsOfType<Rigidbody>();
         foreach (Rigidbody Rocket in Rockets)
         {
-            float force = ((6.67f * Mathf.Pow(10.0f, -11.0f) * Rocket.mass * planetMass) / Mathf.Pow(Vector3.Distance(Rocket.transform.position, transform.position) * 100, 2));
-            Rocket.AddForce((transform.position - Rocket.position).normalized * force);
+            currentRocket = Rocket.gameObject;
+            float force =   ((6.673f * Mathf.Pow(10.0f, -11.0f) * Rocket.mass * planetMass) / Mathf.Pow(Vector3.Distance(Rocket.transform.position, transform.position) * 100, 2));
+            gravityAccel =  ((6.673f * Mathf.Pow(10.0f, -11.0f) * planetMass) / Mathf.Pow(Vector3.Distance(Rocket.transform.position, transform.position) * 100, 2));
+            finalForce = (transform.position - Rocket.position).normalized * force;
+            Rocket.AddForce(finalForce);
         }
     }
 }
+

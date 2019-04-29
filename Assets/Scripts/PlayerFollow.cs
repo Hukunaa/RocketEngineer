@@ -12,6 +12,7 @@ public class PlayerFollow : MonoBehaviour
     private float m_distance;
     private float xRot;
     private float yRot;
+    public bool isOnMap;
 
     void Start()
     {
@@ -53,9 +54,14 @@ public class PlayerFollow : MonoBehaviour
         }
 
         Quaternion finalRot = Quaternion.Euler(yRot, xRot, 0);
-
+        
         m_distance += Input.GetAxis("Mouse ScrollWheel") * 12;
-        transform.position = finalRot * new Vector3(0, 0, m_distance) + finalPos;
+
+        if(!isOnMap)
+            transform.position = finalRot * new Vector3(0, 0, m_distance) + finalPos;
+        else
+            transform.position = finalRot * new Vector3(0, 0, m_distance - 60000) + finalPos;
+
         transform.rotation = Quaternion.Slerp(transform.rotation, finalRot, 0.4f);
 
     }
